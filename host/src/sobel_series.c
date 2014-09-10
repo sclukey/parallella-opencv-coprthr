@@ -63,28 +63,21 @@ int main ()
 
 void sobel_image (uint n, uint line, char* aa, char* bb)
 {
-	int i, m;
-	double tmp;
+	int i;
+	int tmp;
 	for(i=0; i<n; i++) {
-		m = i % line;
-
-		if (m == 0 || m == line-1 || i < line || n-i < line)
-			bb[i] = 0;
-		else {
-
-			tmp = abs(-     aa[i-line-1]
-			          - 2 * aa[i-1]
-			          -     aa[i+line-1]
-			          +     aa[i-line+1]
-			          + 2 * aa[i+1]
-			          +     aa[i+line+1])
-			          + abs(      aa[i-line-1]
-			          + 2 * aa[i-line]
-			          +     aa[i-line+1]
-			          -     aa[i+line-1]
-			          - 2 * aa[i+line]
-			          -     aa[i+line+1]);
-			bb[i] = tmp > 255 ? 255 : tmp;
-		}
+		tmp = abs(-     aa[i-line-1]
+		          - 2 * aa[i-1]
+		          -     aa[i+line-1]
+		          +     aa[i-line+1]
+		          + 2 * aa[i+1]
+		          +     aa[i+line+1])
+		          + abs(      aa[i-line-1]
+		          + 2 * aa[i-line]
+		          +     aa[i-line+1]
+		          -     aa[i+line-1]
+		          - 2 * aa[i+line]
+		          -     aa[i+line+1]);
+		bb[i] = tmp > 255 ? 255 : tmp;
 	}
 }
