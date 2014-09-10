@@ -1,6 +1,4 @@
-// matvecmult.cl
-
-__kernel void matvecmult_kern(
+__kernel void sobel_kern(
 	uint n,
 	uint line,
 	__global char* aa,
