@@ -40,6 +40,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdint.h>
 #include <pthread.h>
 #include <e-hal.h>
+#include <signal.h>
 #include <time.h>
 #include "common.h"
 
@@ -93,6 +94,11 @@ static inline void nano_wait(uint32_t sec, uint32_t nsec)
 
 
 static cv_test_context_t cv_context;
+static char quit;
+
+void intHandler(int dummy) {
+	quit = 1;
+}
 
 int init_epiphany(ep_context_t *e, msg_block_t *msg, size_t buf_size)
 {
@@ -302,6 +308,8 @@ int main(int argc, char *argv[])
 	struct timeval end;
 	double elapsed;
 
+	signal(SIGINT, intHandler);
+
 	msg.msg_init.smem_start = fb_c.fbfsi.smem_start;
 	msg.msg_init.line_length = fb_c.fbfsi.line_length;
 	msg.msg_init.xres = fb_c.fbvsi.xres;
@@ -350,7 +358,8 @@ int main(int argc, char *argv[])
 	}
 
 	unsigned int frame;
-	for (frame = 0; frame < 100; frame++)
+	quit = '\0';
+	while(!quit)
 	{
 		gettimeofday(&start, NULL);
 		uint32_t row, col;
