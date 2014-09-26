@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
 		nano_wait(0, 33000000);
 		gettimeofday(&end, NULL);
 		elapsed = end.tv_sec + (end.tv_usec/1000000.0) - start.tv_sec - (start.tv_usec/1000000.0);
-		printf("This frame took: %0.6lf seconds for a rate of %0.6lf fps\n", elapsed, 1/elapsed);
+		printf("\033[K\033[0;0HThis frame took: %0.6lf seconds for a rate of %0.6lf fps\n", elapsed, 1/elapsed);
 	}
 
 	release_epiphany(&ep_context);
